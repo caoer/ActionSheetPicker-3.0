@@ -106,10 +106,14 @@ static const enum UIViewAnimationOptions options = UIViewAnimationOptionCurveEas
     if ((self = [super init]))
     {
         view = aView;
-        self.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.0f];
-        _bgView = [UIView new];
-        _bgView.backgroundColor = [UIColor colorWithRed:247.f/255.f green:247.f/255.f blue:247.f/255.f alpha:1.0f];
-        [self addSubview:_bgView];
+        self.backgroundColor = [UIColor clearColor];
+        _backgroundView = [UIView new];
+        _backgroundView.backgroundColor = [UIColor clearColor];
+        UIVisualEffect * blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+         _backgroundVisualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        
+        [self addSubview:_backgroundView];
+        [self addSubview:_backgroundVisualEffectView];
         [self addSubview:view];
     }
     return self;
@@ -120,8 +124,10 @@ static const enum UIViewAnimationOptions options = UIViewAnimationOptionCurveEas
     self.frame = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height + view.bounds.size.height);
     view.frame = CGRectMake(view.bounds.origin.x, bounds.size.height, view.bounds.size.width, view.bounds.size.height);
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    _bgView.frame = view.frame;
-    _bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _backgroundView.frame = view.frame;
+    _backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    _backgroundVisualEffectView.frame = view.frame;
+    _backgroundVisualEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
 - (void)showFromBarButtonItem:(UIBarButtonItem *)item animated:(BOOL)animated
